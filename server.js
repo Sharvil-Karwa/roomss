@@ -14,10 +14,14 @@ require("./app/routes/auth.routes")(app);
 require("./app/routes/user.routes")(app);
 
 const db = require("./app/models");
-
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and Resync Db");
-});
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
